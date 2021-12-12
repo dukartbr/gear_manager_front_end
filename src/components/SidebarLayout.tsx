@@ -13,6 +13,7 @@ import Register from "../pages/Register";
 import Login from "../pages/Login";
 import CreateProduct from "../pages/CreateProduct";
 import Reports from "../pages/Reports";
+import WorkOrders from "../pages/WorkOrders";
 
 // const useStore = create((set) => ({
 //     token: "",
@@ -27,7 +28,6 @@ import Reports from "../pages/Reports";
 export const useAuthenticatedStore = {};
 
 export default function SidebarLayout({ children }: { children: any }) {
-  const [isOpen, setIsOpen] = React.useState(true);
   // const isAuthenticated = useAuthenticatedStore(
   //     (state) => state.isAuthenticated
   // );
@@ -37,17 +37,15 @@ export default function SidebarLayout({ children }: { children: any }) {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <Grid h='100vh' templateColumns='repeat(80, 1fr)'>
-          <GridItem rowSpan={1} colSpan={80}>
+        <Grid h='100vh' templateColumns='repeat(6, 1fr)'>
+          <GridItem rowSpan={1} colSpan={6}>
             <Header isAuthenticated={true} />
           </GridItem>
-          <GridItem colSpan={isOpen ? 12 : 1}>
-            <Sidebar isPinned={false} />
+          <GridItem colSpan={1}>
+            <Sidebar />
           </GridItem>
-          <GridItem colSpan={68}>
+          <GridItem colSpan={5}>
             <Box
-              // bgGradient='linear(to-t, #4facfe, #00f2fe)'
-              // bgGradient='linear(to-t, #37ecba,#72afd3)'
               bgGradient='linear(to-t, #96deda,#50c9c3)'
               px={4}
               py={3}
@@ -55,6 +53,7 @@ export default function SidebarLayout({ children }: { children: any }) {
               overflow='scroll'
             >
               <Routes>
+                <Route path='/workorders' element={<WorkOrders />} />
                 <Route path='/products' element={<ProductsPage />} />
                 <Route path='/register' element={<Register />} />
                 <Route path='/login' element={<Login />} />

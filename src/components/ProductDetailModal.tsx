@@ -6,17 +6,10 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Text,
   Button,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { ProductProps } from "./Product";
-
-// const config = {
-//   headers: {
-//     Authorization: `Bearer ${token}`,
-//   },
-// };
 
 const deleteProduct = async (id) => {
   const res = await axios.delete(`http://localhost:8000/api/products/${id}`);

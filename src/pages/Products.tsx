@@ -33,8 +33,6 @@ function ProductsPage() {
   const productsQuery = useProducts();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  console.log("currentProduct :>> ", currentProduct);
-
   return (
     <Tabs>
       <TabList>
@@ -85,7 +83,10 @@ function ProductsPage() {
                       <GridItem key={product.id} colSpan={1}>
                         <Product
                           {...product}
-                          toggleView={() => console.log("hitting here")}
+                          toggleView={() => {
+                            setCurrentProduct(product);
+                            onOpen();
+                          }}
                         />
                       </GridItem>
                     ))}
