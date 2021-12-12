@@ -1,6 +1,7 @@
+import React from "react";
 import ReactDOM from "react-dom";
 import { ChakraProvider } from "@chakra-ui/react";
-import SidebarLayout from "./components/SidebarLayout";
+import SidebarLayout from "../components/SidebarLayout";
 
 function App({ children }: { children?: any }) {
   return (
