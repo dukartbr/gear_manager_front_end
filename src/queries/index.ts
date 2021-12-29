@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useUserLogin, useRegister } from "./auth";
-import { useProducts } from "./products";
+import { useProducts, useProductCategories } from "./products";
 import { useWorkOrders } from "./workOrders";
 
 // const token = document.head.querySelector('meta[name="csrf-token"]');
@@ -14,4 +14,11 @@ const apiClient = axios.create({
   },
 });
 
-export { apiClient, useUserLogin, useRegister, useProducts, useWorkOrders };
+export {
+  apiClient,
+  useUserLogin,
+  useRegister,
+  useProducts,
+  useProductCategories,
+  useWorkOrders,
+};

@@ -1,4 +1,6 @@
 import {
+  Badge,
+  Flex,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -7,6 +9,15 @@ import {
   ModalBody,
   ModalCloseButton,
   Button,
+  Divider,
+  Stat,
+  StatLabel,
+  StatNumber,
+  StatHelpText,
+  StatArrow,
+  StatGroup,
+  Spacer,
+  Text,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { ProductProps } from "./Product";
@@ -19,34 +30,50 @@ const deleteProduct = async (id) => {
 interface ProductDetailModalProps {
   isOpen: boolean;
   onClose: any;
-  onOpen: any;
   product: ProductProps;
 }
 
 function ProductDetailModal({
   isOpen,
   onClose,
-  onOpen,
   product,
 }: ProductDetailModalProps) {
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} size='xl'>
       <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>{product?.name}</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>
-          <pre>{JSON.stringify(product, null, 2)}</pre>
+      <ModalContent overflow='hidden'>
+        <ModalHeader bg='header' color='white'>
+          {product?.name}
+          <Text fontSize='12px' color='gray.100'>
+            Product ID: #{product?.id}
+          </Text>
+        </ModalHeader>
+        <ModalCloseButton color='white' />
+        <ModalBody bg='body'>
+          <Stat>
+            <StatLabel>Current Listed Price</StatLabel>
+            <StatNumber>${product?.price}</StatNumber>
+          </Stat>
+          <Divider />
+          <Badge
+            colorScheme={parseInt(product?.inventory) > 2 ? "green" : "red"}
+          >
+            Inventory: {product?.inventory}
+          </Badge>
+          <br />
+          <Badge colorScheme='purple'>Category: {product?.category}</Badge>
+          <Text>{product?.description}</Text>
+          {/* <pre>{JSON.stringify(product, null, 2)}</pre> */}
         </ModalBody>
 
         <ModalFooter>
           <Button colorScheme='blue' mr={3} onClick={onClose}>
-            Close
+            Edit
           </Button>
           <Button
-            variant='ghost'
+            // variant='ghost'
             colorScheme='red'
-            onClick={() => deleteProduct(product.id)}
+            onClick={() => deleteProduct(product?.id)}
           >
             Delete
           </Button>

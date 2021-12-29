@@ -1,56 +1,33 @@
 import { useState } from "react";
 import {
   Box,
-  Button,
   Center,
-  Flex,
   Grid,
   GridItem,
   Spinner,
-  Text,
-  Tabs,
-  TabList,
   TabPanels,
-  Tab,
   TabPanel,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useProducts } from "../queries";
 import Product from "../components/Product";
 import ProductDetailModal from "../components/ProductDetailModal";
+import ProductCategoryTabsContainer from "../components/ProductCategoryTabsContainer";
 
 export const categories = ["amps", "effects", "guitars"];
 
 function ProductsPage() {
   const [currentProduct, setCurrentProduct] = useState();
   const productsQuery = useProducts();
-  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const {
+    isOpen: isViewProductOpen,
+    onOpen: onViewProductOpen,
+    onClose: onViewProductClose,
+  } = useDisclosure();
 
   return (
-    <Tabs>
-      <TabList>
-        <Tab
-          color='white'
-          // backgroundColor='white'
-          borderTopLeftRadius={8}
-          borderTopRightRadius={8}
-        >
-          ALL
-        </Tab>
-        {categories.map((c, i) => (
-          <Tab color='white' key={i}>
-            {c.toUpperCase()}
-          </Tab>
-        ))}
-      </TabList>
-
+    <ProductCategoryTabsContainer>
       <Box height='100vh'>
         {productsQuery.isLoading && (
           <Center mt='6rem'>
@@ -59,15 +36,15 @@ function ProductsPage() {
         )}
         {productsQuery.isSuccess && (
           <TabPanels>
-            <TabPanel>
-              <Grid templateColumns='repeat(4, 1fr)' gap={4} py={3} px={3}>
+            <TabPanel px={0}>
+              <Grid templateColumns='repeat(4, 1fr)' gap={4}>
                 {productsQuery.data?.data?.map((product) => (
                   <GridItem key={product.id} colSpan={1}>
                     <Product
                       {...product}
                       toggleView={() => {
                         setCurrentProduct(product);
-                        onOpen();
+                        onViewProductOpen();
                       }}
                     />
                   </GridItem>
@@ -76,7 +53,7 @@ function ProductsPage() {
             </TabPanel>
             {categories.map((cat, i) => (
               <TabPanel key={i}>
-                <Grid templateColumns='repeat(4, 1fr)' gap={4} py={3} px={3}>
+                <Grid templateColumns='repeat(4, 1fr)' gap={4}>
                   {productsQuery.data?.data
                     ?.filter((product) => product.category === cat)
                     .map((product) => (
@@ -85,7 +62,7 @@ function ProductsPage() {
                           {...product}
                           toggleView={() => {
                             setCurrentProduct(product);
-                            onOpen();
+                            onViewProductOpen();
                           }}
                         />
                       </GridItem>
@@ -99,14 +76,13 @@ function ProductsPage() {
 
       <ProductDetailModal
         product={currentProduct}
-        isOpen={isOpen}
+        isOpen={isViewProductOpen}
         onClose={() => {
           setCurrentProduct(null);
-          onClose();
+          onViewProductClose();
         }}
-        onOpen={onOpen}
       />
-    </Tabs>
+    </ProductCategoryTabsContainer>
   );
 }
 

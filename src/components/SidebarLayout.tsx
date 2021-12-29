@@ -14,6 +14,7 @@ import Login from "../pages/Login";
 import CreateProduct from "../pages/CreateProduct";
 import Reports from "../pages/Reports";
 import WorkOrders from "../pages/WorkOrders";
+import { pallete1 } from "../utils/themes";
 
 // const useStore = create((set) => ({
 //     token: "",
@@ -37,19 +38,19 @@ export default function SidebarLayout({ children }: { children: any }) {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <Grid h='100vh' templateColumns='repeat(6, 1fr)'>
-          <GridItem rowSpan={1} colSpan={6}>
+        <Grid templateColumns='repeat(8, 1fr)'>
+          <GridItem rowSpan={1} colSpan={8}>
             <Header isAuthenticated={true} />
           </GridItem>
           <GridItem colSpan={1}>
             <Sidebar />
           </GridItem>
-          <GridItem colSpan={5}>
+          <GridItem colSpan={7}>
             <Box
-              bgGradient='linear(to-t, #96deda,#50c9c3)'
+              // bgGradient='linear(to-t, #96deda,#50c9c3)'
+              bg='body'
               px={4}
               py={3}
-              height='100vh'
               overflow='scroll'
             >
               <Routes>

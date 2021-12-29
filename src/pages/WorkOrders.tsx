@@ -9,13 +9,19 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  useDisclosure,
 } from "@chakra-ui/react";
+import WorkOrder from "../components/WorkOrder";
+import WorkOrderDetailModal from "../components/WorkOrderDetailModal";
 import { useWorkOrders } from "../queries";
 
 interface Props {}
 
 function WorkOrders(props: Props) {
+  const [currentWorkOrder, setCurrentWorkOrder] = React.useState();
   const workOrdersQuery = useWorkOrders();
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <Box height='100vh'>
@@ -30,24 +36,20 @@ function WorkOrders(props: Props) {
       )}
       {workOrdersQuery.isSuccess &&
         workOrdersQuery.data.data.map((order) => (
-          <Box backgroundColor='white' my={6} borderRadius={8}>
-            <Box
-              bg='gray.700'
-              borderTopRightRadius={8}
-              borderTopLeftRadius={8}
-              pt={2}
-              px={3}
-            >
-              <Heading color='white'>
-                <Flex>
-                  <BsFillPersonFill />
-                  {order.contact_name}
-                </Flex>
-              </Heading>
-            </Box>
-            <pre>{JSON.stringify(order, null, 2)}</pre>
-          </Box>
+          <WorkOrder
+            order={order}
+            toggleView={() => {
+              setCurrentWorkOrder(order);
+              onOpen();
+            }}
+          />
         ))}
+
+      <WorkOrderDetailModal
+        isOpen={isOpen}
+        onClose={onClose}
+        order={currentWorkOrder}
+      />
     </Box>
   );
 }

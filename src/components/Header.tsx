@@ -12,6 +12,7 @@ import {
   MenuDivider,
   Spacer,
 } from "@chakra-ui/react";
+import { pallete1 } from "../utils/themes";
 
 export default function Header({
   isAuthenticated,
@@ -19,8 +20,8 @@ export default function Header({
   isAuthenticated: boolean;
 }) {
   return (
-    <Box bg='blue.700' py={2}>
-      <Container maxW='container.lg'>
+    <Box bg='header' py={2}>
+      <Container maxW='container.xl'>
         <Flex>
           <Heading color='white'>CRUD API</Heading>
           <Spacer />

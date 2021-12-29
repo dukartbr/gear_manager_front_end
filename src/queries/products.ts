@@ -7,3 +7,10 @@ export function useProducts() {
     async () => await axios.get("http://localhost:8000/api/products")
   );
 }
+
+export function useProductCategories() {
+  return useQuery(
+    ["product_categories"],
+    async () => await axios.get("http://localhost:8000/api/productcategories")
+  );
+}

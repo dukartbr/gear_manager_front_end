@@ -8,7 +8,6 @@ import {
   StatNumber,
   Flex,
   Spacer,
-  Text,
 } from "@chakra-ui/react";
 
 export interface ProductProps {
@@ -23,7 +22,6 @@ export interface ProductProps {
 
 export default function Product({
   name,
-  description,
   price,
   inventory,
   category,
@@ -41,13 +39,10 @@ export default function Product({
         h='300px'
       >
         <Heading as='h3'>{name}</Heading>
-        <Badge colorScheme='purple'>Category: {category}</Badge>
         <Stat>
           <StatNumber>${price}.00</StatNumber>
         </Stat>
-        <Box>
-          <Text>{description}</Text>
-        </Box>
+        <Badge colorScheme='purple'>Category: {category}</Badge>
       </Box>
       <Flex
         bg='white'
